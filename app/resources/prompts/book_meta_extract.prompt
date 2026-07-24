@@ -1,0 +1,17 @@
+请从以下文档内容中提取听书元数据。
+文件名：{file_title}
+当前判断的内容类型：{content_type}
+内容预览：
+{text}
+
+请提取以下信息并以JSON格式返回：
+{{
+    "book_title": "书名",
+    "author": "作者",
+    "category": "类别（从以下选择：{categories}）",
+    "duration": "有声书时长（如有）",
+    "highlights": "听书亮点/推荐语（如有）",
+    "faq": "常见问答（如有）"
+}}
+
+如果某项无法确定，请返回空字符串。

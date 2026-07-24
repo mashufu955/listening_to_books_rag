@@ -1,0 +1,11 @@
+请根据以下听书元数据，生成一段结构化的书籍详情摘要。
+书名：《{book_title}》
+作者：{author}
+类别：{category}
+内容类型：{content_types}
+有声书时长：{duration}
+演播者：{narrator}
+听书亮点：{highlights}
+常见问题：{faq}
+
+请以清晰、友好的方式输出书籍详情，包含以上所有信息。

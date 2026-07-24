@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>听书知识库 · 功能亮点全景图</title>
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#060d1f;
+    --surface:#0c1829;
+    --surface2:#112035;
+    --border:#1a3050;
+    --primary:#3b82f6;
+    --primary-glow:rgba(59,130,246,.25);
+    --accent-cyan:#06b6d4;
+    --accent-purple:#8b5cf6;
+    --accent-emerald:#10b981;
+    --accent-amber:#f59e0b;
+    --accent-rose:#f43f5e;
+    --accent-pink:#ec4899;
+    --text-primary:#e2e8f0;
+    --text-secondary:#94a3b8;
+    --text-muted:#64748b;
+    --gradient-hero:linear-gradient(135deg,#1e3a5f 0%,#0f172a 50%,#1a1040 100%);
+  }
+  html{font-size:16px;scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text-primary);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  /* ─── HERO ─────────────────────────── */
+  .hero{
+    position:relative;
+    padding:72px 40px 56px;
+    text-align:center;
+    background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(59,130,246,.12) 0%,transparent 70%),
+               radial-gradient(ellipse 50% 40% at 80% 20%,rgba(139,92,246,.08) 0%,transparent 60%),
+               var(--gradient-hero);
+    border-bottom:1px solid var(--border);
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(rgba(59,130,246,.03) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(59,130,246,.03) 1px,transparent 1px);
+    background-size:60px 60px;
+    pointer-events:none;
+  }
+  .hero-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 18px;
+    border-radius:999px;
+    background:rgba(59,130,246,.1);
+    border:1px solid rgba(59,130,246,.25);
+    font-size:.8rem;
+    color:var(--accent-cyan);
+    letter-spacing:.05em;
+    margin-bottom:20px;
+    position:relative;
+  }
+  .hero-badge .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--accent-cyan);
+    box-shadow:0 0 8px var(--accent-cyan);
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  .hero h1{
+    font-size:clamp(2rem,5vw,3.2rem);
+    font-weight:700;
+    background:linear-gradient(135deg,#e2e8f0 0%,#94a3b8 100%);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    margin-bottom:12px;
+    position:relative;
+  }
+  .hero .subtitle{
+    font-size:1.1rem;
+    color:var(--text-secondary);
+    max-width:680px;
+    margin:0 auto 28px;
+    position:relative;
+  }
+  .hero-stats{
+    display:flex;
+    justify-content:center;
+    gap:48px;
+    position:relative;
+    flex-wrap:wrap;
+  }
+  .hero-stat{
+    text-align:center;
+  }
+  .hero-stat .num{
+    font-size:2rem;
+    font-weight:700;
+    background:linear-gradient(135deg,var(--primary),var(--accent-cyan));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .hero-stat .label{
+    font-size:.78rem;
+    color:var(--text-muted);
+    margin-top:2px;
+  }
+
+  /* ─── SECTION COMMON ──────────────── */
+  section{
+    padding:64px 40px;
+    max-width:1440px;
+    margin:0 auto;
+  }
+  .section-header{
+    text-align:center;
+    margin-bottom:48px;
+  }
+  .section-header .icon{
+    font-size:2.2rem;
+    margin-bottom:8px;
+  }
+  .section-header h2{
+    font-size:1.8rem;
+    font-weight:700;
+    margin-bottom:8px;
+  }
+  .section-header .desc{
+    color:var(--text-secondary);
+    font-size:.95rem;
+    max-width:600px;
+    margin:0 auto;
+  }
+  .divider{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    margin:0 auto 48px;
+    max-width:500px;
+  }
+  .divider .line{
+    flex:1;
+    height:1px;
+    background:var(--border);
+  }
+  .divider .tag{
+    font-size:.75rem;
+    color:var(--accent-cyan);
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    white-space:nowrap;
+  }
+
+  /* ─── PIPELINES (Import + Query) ──── */
+  .pipelines{
+    padding:0;
+    max-width:100%;
+  }
+  .pipelines-grid{
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    gap:0;
+    max-width:1440px;
+    margin:0 auto;
+    padding:0 40px 64px;
+  }
+  .pipeline-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:32px 28px;
+    position:relative;
+    overflow:hidden;
+  }
+  .pipeline-card::before{
+    content:"";
+    position:absolute;
+    top:0;left:0;right:0;
+    height:3px;
+  }
+  .pipeline-card.import::before{
+    background:linear-gradient(90deg,var(--accent-cyan),var(--primary));
+  }
+  .pipeline-card.query::before{
+    background:linear-gradient(90deg,var(--accent-purple),var(--accent-pink));
+  }
+  .pipeline-card .pipeline-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:6px;
+  }
+  .pipeline-card .pipeline-title .icon-circle{
+    width:42px;height:42px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.3rem;
+  }
+  .import .icon-circle{background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3)}
+  .query .icon-circle{background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.3)}
+  .pipeline-card h3{
+    font-size:1.15rem;
+    font-weight:600;
+  }
+  .import h3{color:var(--accent-cyan)}
+  .query h3{color:var(--accent-purple)}
+  .pipeline-card .pipeline-desc{
+    font-size:.82rem;
+    color:var(--text-muted);
+    margin-bottom:24px;
+    margin-left:54px;
+  }
+  .flow-steps{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+    position:relative;
+  }
+  .flow-step{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    position:relative;
+    padding-bottom:4px;
+  }
+  .flow-step .step-num{
+    width:32px;height:32px;min-width:32px;
+    border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:.78rem;
+    font-weight:700;
+    color:#fff;
+    z-index:1;
+  }
+  .import .step-num{background:linear-gradient(135deg,rgba(6,182,212,.3),rgba(59,130,246,.3));border:1px solid rgba(6,182,212,.4)}
+  .query .step-num{background:linear-gradient(135deg,rgba(139,92,246,.3),rgba(236,72,153,.3));border:1px solid rgba(139,92,246,.4)}
+  .flow-step .step-content{
+    flex:1;
+    background:var(--surface2);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:10px 14px;
+    transition:all .3s;
+  }
+  .flow-step .step-content:hover{
+    border-color:rgba(59,130,246,.4);
+    box-shadow:0 0 20px rgba(59,130,246,.08);
+    transform:translateX(2px);
+  }
+  .step-content .step-name{
+    font-size:.88rem;
+    font-weight:600;
+    margin-bottom:2px;
+  }
+  .step-content .step-detail{
+    font-size:.73rem;
+    color:var(--text-muted);
+    line-height:1.5;
+  }
+  .step-content .step-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:4px;
+    margin-top:6px;
+  }
+  .step-tag{
+    font-size:.65rem;
+    padding:2px 8px;
+    border-radius:4px;
+    background:rgba(59,130,246,.08);
+    border:1px solid rgba(59,130,246,.15);
+    color:var(--text-secondary);
+  }
+  /* connector arrow */
+  .flow-step .arrow{
+    position:absolute;
+    left:15px;
+    bottom:-6px;
+    z-index:2;
+    font-size:.65rem;
+    color:var(--text-muted);
+  }
+
+  /* middle connector */
+  .pipelines-connector{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:60px;
+  }
+  .connector-box{
+    width:48px;height:48px;border-radius:50%;
+    background:var(--surface);
+    border:2px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.3rem;
+    position:relative;
+  }
+  .connector-box::before,.connector-box::after{
+    content:"";
+    position:absolute;
+    top:50%;
+    width:calc(50% + 24px);
+    height:1px;
+    background:repeating-linear-gradient(90deg,var(--border) 0 4px,transparent 4px 8px);
+  }
+  .connector-box::before{right:100%}
+  .connector-box::after{left:100%}
+
+  /* ─── TECH STACK ──────────────────── */
+  .tech-section{
+    background:var(--surface);
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+  }
+  .tech-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+    gap:16px;
+  }
+  .tech-card{
+    background:var(--bg);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:20px;
+    transition:all .3s;
+    position:relative;
+    overflow:hidden;
+  }
+  .tech-card:hover{
+    border-color:rgba(59,130,246,.4);
+    transform:translateY(-3px);
+    box-shadow:0 8px 30px rgba(0,0,0,.3);
+  }
+  .tech-card .tech-icon{
+    width:40px;height:40px;
+    border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.2rem;
+    margin-bottom:12px;
+  }
+  .tech-card .tech-name{
+    font-size:.92rem;
+    font-weight:600;
+    margin-bottom:4px;
+  }
+  .tech-card .tech-desc{
+    font-size:.73rem;
+    color:var(--text-muted);
+    line-height:1.5;
+  }
+  .tech-card .tech-category{
+    position:absolute;
+    top:12px;right:12px;
+    font-size:.62rem;
+    padding:2px 8px;
+    border-radius:4px;
+    background:rgba(59,130,246,.08);
+    border:1px solid rgba(59,130,246,.15);
+    color:var(--text-muted);
+  }
+
+  /* ─── FUTURE ROADMAP ──────────────── */
+  .roadmap{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+    gap:20px;
+  }
+  .roadmap-item{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:24px 22px;
+    position:relative;
+    overflow:hidden;
+    transition:all .3s;
+  }
+  .roadmap-item:hover{
+    border-color:rgba(139,92,246,.35);
+    transform:translateY(-2px);
+    box-shadow:0 8px 30px rgba(0,0,0,.2);
+  }
+  .roadmap-item .roadmap-num{
+    font-size:2.5rem;
+    font-weight:800;
+    opacity:.06;
+    position:absolute;
+    top:8px;right:16px;
+    line-height:1;
+  }
+  .roadmap-item .roadmap-icon{
+    font-size:1.6rem;
+    margin-bottom:12px;
+  }
+  .roadmap-item h4{
+    font-size:.95rem;
+    font-weight:600;
+    margin-bottom:6px;
+    color:var(--text-primary);
+  }
+  .roadmap-item p{
+    font-size:.78rem;
+    color:var(--text-muted);
+    line-height:1.6;
+  }
+  .roadmap-item .roadmap-tag{
+    display:inline-block;
+    margin-top:10px;
+    font-size:.68rem;
+    padding:3px 10px;
+    border-radius:6px;
+    background:rgba(139,92,246,.1);
+    border:1px solid rgba(139,92,246,.2);
+    color:var(--accent-purple);
+  }
+
+  /* ─── FOOTER ──────────────────────── */
+  footer{
+    text-align:center;
+    padding:40px;
+    color:var(--text-muted);
+    font-size:.78rem;
+    border-top:1px solid var(--border);
+  }
+  footer span{
+    background:linear-gradient(135deg,var(--primary),var(--accent-purple));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    font-weight:600;
+  }
+
+  /* ─── ANIMATIONS ──────────────────── */
+  @keyframes fadeUp{
+    from{opacity:0;transform:translateY(20px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  .animate{
+    opacity:0;
+    animation:fadeUp .6s ease forwards;
+  }
+  .delay-1{animation-delay:.1s}
+  .delay-2{animation-delay:.2s}
+  .delay-3{animation-delay:.3s}
+  .delay-4{animation-delay:.4s}
+  .delay-5{animation-delay:.5s}
+
+  /* ─── GLOW ORBS ───────────────────── */
+  .orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(80px);
+    pointer-events:none;
+    opacity:.08;
+  }
+
+  /* ─── RESPONSIVE ──────────────────── */
+  @media(max-width:900px){
+    .pipelines-grid{grid-template-columns:1fr;gap:24px;padding:0 20px 48px}
+    .pipelines-connector{display:none}
+    section{padding:48px 20px}
+    .hero{padding:48px 20px 36px}
+    .hero-stats{gap:24px}
+    .tech-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HERO ═══════════ -->
+<div class="hero">
+  <div class="orb" style="width:400px;height:400px;background:var(--primary);top:-100px;left:-100px"></div>
+  <div class="orb" style="width:300px;height:300px;background:var(--accent-purple);top:-50px;right:-80px"></div>
+  <div class="hero-badge animate"><span class="dot"></span>Enterprise RAG Platform</div>
+  <h1 class="animate delay-1">听书知识库 · 功能亮点全景图</h1>
+  <p class="subtitle animate delay-2">基于 RAG 架构的智能听书知识库系统，覆盖内容导入、智能检索问答全链路，为听众与内容运营提供精准的知识服务能力</p>
+  <div class="hero-stats animate delay-3">
+    <div class="hero-stat"><div class="num">3</div><div class="label">并行微服务</div></div>
+    <div class="hero-stat"><div class="num">8+</div><div class="label">数据源类型</div></div>
+    <div class="hero-stat"><div class="num">7</div><div class="label">导入处理节点</div></div>
+    <div class="hero-stat"><div class="num">9</div><div class="label">查询处理节点</div></div>
+    <div class="hero-stat"><div class="num">5</div><div class="label">技术展望方向</div></div>
+  </div>
+</div>
+
+<!-- ═══════════ PIPELINES ═══════════ -->
+<div class="pipelines">
+  <div class="section-header" style="padding-top:64px">
+    <div class="icon">🔄</div>
+    <h2>双主线运行逻辑</h2>
+    <p class="desc">导入流水线与查询流水线并行运行，基于 LangGraph 有向图编排，实现全链路可观测与任务追踪</p>
+  </div>
+
+  <div class="pipelines-grid">
+    <!-- ── IMPORT PIPELINE ── -->
+    <div class="pipeline-card import animate delay-1">
+      <div class="pipeline-title">
+        <div class="icon-circle">📥</div>
+        <div>
+          <h3>内容导入主线</h3>
+          <div style="font-size:.72rem;color:var(--text-muted);margin-top:2px">Import Pipeline · 8001</div>
+        </div>
+      </div>
+      <div class="pipeline-desc">多源异构数据经文档解析、语义切分、元数据提取后向量化入库</div>
+
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-name">📁 入口校验</div>
+            <div class="step-detail">文件类型路由 · MD 直通 / PDF 转 Markdown</div>
+            <div class="step-tags"><span class="step-tag">文件探测</span><span class="step-tag">类型路由</span></div>
+          </div>
+        </div>
+        <div class="arrow">▼</div>
+
+        <div class="flow-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-name">🖼️ 图片提取</div>
+            <div class="step-detail">Markdown 内嵌图片提取，上传至 MinIO 对象存储</div>
+            <div class="step-tags"><span class="step-tag">MinerU</span><span class="step-tag">MinIO</span></div>
+          </div>
+        </div>
+        <div class="arrow">▼</div>
+
+        <div class="flow-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-name">✂️ 文档切分</div>
+            <div class="step-detail">基于 RecursiveCharacterTextSplitter 智能分块，保留上下文语义边界</div>
+            <div class="step-tags"><span class="step-tag">语义切分</span><span class="step-tag">chunk</span></div>
+          </div>
+        </div>
+        <div class="arrow">▼</div>
+
+        <div class="flow-step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-name">📋 元数据提取</div>
+            <div class="step-detail">LLM 结构化提取：书名、作者、类别、内容类型、标签、时长等</div>
+            <div class="step-tags"><span class="step-tag">LLM</span><span class="step-tag">结构化</span><span class="step-tag">JSON</span></div>
+          </div>
+        </div>
+        <div class="arrow">▼</div>
+
+        <div class="flow-step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <div class="step-name">🏷️ 条目识别</div>
+            <div class="step-detail">NER 级别实体识别，提取书籍条目名称并关联向量集合</div>
+            <div class="step-tags"><span class="step-tag">NER</span><span class="step-tag">实体链接</span></div>
+          </div>
+        </div>
+        <div class="arrow">▼</div>
+
+        <div class="flow-step">
+          <div class="step-num">6</div>
+          <div class="step-content">
+            <div class="step-name">🔢 向量嵌入</div>
+            <div class="step-detail">BGE-M3 多语言向量模型，稠密 + 稀疏向量联合编码</div>
+            <div class="step-tags"><span class="step-tag">BGE-M3</span><span class="step-tag">Dense</span><span class="step-tag">Sparse</span></div>
+          </div>
+        </div>
+        <div class="arrow">▼</div>
+
+        <div class="flow-step">
+          <div class="step-num">7</div>
+          <div class="step-content">
+            <div class="step-name">💾 向量入库</div>
+            <div class="step-detail">写入 Milvus 四集合架构：chunks / entities / item_names / book_meta</div>
+            <div class="step-tags"><span class="step-tag">Milvus</span><span class="step-tag">4-Collection</span><span class="step-tag">持久化</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CONNECTOR ── -->
+    <div class="pipelines-connector">
+      <div class="connector-box">⚡</div>
+    </div>
+
+    <!-- ── QUERY PIPELINE ── -->
+    <div class="pipeline-card query animate delay-2">
+      <div class="pipeline-title">
+        <div class="icon-circle">📤</div>
+        <div>
+          <h3>智能查询主线</h3>
+          <div style="font-size:.72rem;color:var(--text-muted);margin-top:2px">Query Pipeline · 8002</div>
+        </div>
+      </div>
+      <div class="pipeline-desc">意图感知 + 多路召回 + 融合排序，支持推荐 / 详情 / 笔记 / 问答四大场景</div>
+
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-name">🎯 实体消歧</div>
+            <div class="step-detail">Item Name 识别与确认，模糊匹配纠错，明确查询对象</div>
+            <div class="step-tags"><span class="step-tag">实体链接</span><span class="step-tag">纠错</span></div>
+          </div>
+        </div>
+        <div class="arrow">▼</div>
+
+        <div class="flow-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-name">🧠 意图分类</div>
+            <div class="step-detail">LLM 判断查询意图：书籍推荐 / 详情查询 / 听书笔记 / 知识问答</div>
+            <div class="step-tags"><span class="step-tag">LLM</span><span class="step-tag">意图路由</span></div>
+          </div>
+        </div>
+        <div class="arrow">▼</div>
+
+        <div class="flow-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-name">🔍 多路召回</div>
+            <div class="step-detail">三路并行检索：向量检索 + HyDE 假设文档 + Web 搜索增强</div>
+            <div class="step-tags"><span class="step-tag">Embedding</span><span class="step-tag">HyDE</span><span class="step-tag">MCP</span></div>
+          </div>
+        </div>
+        <div class="arrow">▼</div>
+
+        <div class="flow-step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-name">🔗 RRF 融合</div>
+            <div class="step-detail">Reciprocal Rank Fusion 算法融合多路结果，消除单路偏差</div>
+            <div class="step-tags"><span class="step-tag">RRF</span><span class="step-tag">多路融合</span></div>
+          </div>
+        </div>
+        <div class="arrow">▼</div>
+
+        <div class="flow-step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <div class="step-name">📊 精排重排</div>
+            <div class="step-detail">BGE-Reranker 交叉编码器精排，Top-K 结果精准过滤</div>
+            <div class="step-tags"><span class="step-tag">BGE-Reranker</span><span class="step-tag">Cross-Encoder</span></div>
+          </div>
+        </div>
+        <div class="arrow">▼</div>
+
+        <div class="flow-step">
+          <div class="step-num">6</div>
+          <div class="step-content">
+            <div class="step-name">💡 答案生成</div>
+            <div class="step-detail">LLM 结合检索上下文生成结构化回答，附带引用溯源</div>
+            <div class="step-tags"><span class="step-tag">LLM</span><span class="step-tag">RAG</span><span class="step-tag">溯源</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Intent flow legend -->
+  <div style="max-width:1440px;margin:0 auto;padding:0 40px 48px">
+    <div class="divider"><div class="line"></div><div class="tag">查询意图分支</div><div class="line"></div></div>
+    <div style="display:flex;justify-content:center;gap:32px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--text-secondary)">
+        <span style="width:10px;height:10px;border-radius:3px;background:var(--accent-emerald)"></span>📚 书籍推荐
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--text-secondary)">
+        <span style="width:10px;height:10px;border-radius:3px;background:var(--primary)"></span>📖 书籍详情
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--text-secondary)">
+        <span style="width:10px;height:10px;border-radius:3px;background:var(--accent-amber)"></span>📝 听书笔记
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--text-secondary)">
+        <span style="width:10px;height:10px;border-radius:3px;background:var(--accent-purple)"></span>💬 知识问答
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TECH STACK ═══════════ -->
+<section class="tech-section">
+  <div class="section-header">
+    <div class="icon">🧰</div>
+    <h2>核心技术栈</h2>
+    <p class="desc">企业级技术选型，覆盖 AI 模型层、数据存储层、服务框架层与基础设施层</p>
+  </div>
+  <div class="divider"><div class="line"></div><div class="tag">Technology Stack</div><div class="line"></div></div>
+
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="tech-icon" style="background:rgba(59,130,246,.12)">🚀</div>
+      <div class="tech-name">FastAPI</div>
+      <div class="tech-desc">高性能异步 Web 框架，三端口微服务架构（导入 / 查询 / 管控）</div>
+      <div class="tech-category">服务框架</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon" style="background:rgba(139,92,246,.12)">🕸️</div>
+      <div class="tech-name">LangGraph</div>
+      <div class="tech-desc">LLM 工作流编排引擎，StateGraph 有向图定义导入与查询双流水线</div>
+      <div class="tech-category">AI 编排</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon" style="background:rgba(16,185,129,.12)">🔮</div>
+      <div class="tech-name">Milvus</div>
+      <div class="tech-desc">分布式向量数据库，四集合架构存储 Chunk / Entity / ItemName / BookMeta</div>
+      <div class="tech-category">向量存储</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon" style="background:rgba(6,182,212,.12)">🍃</div>
+      <div class="tech-name">MongoDB</div>
+      <div class="tech-desc">多轮对话历史持久化存储，支持会话管理与历史回溯</div>
+      <div class="tech-category">文档存储</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon" style="background:rgba(245,158,11,.12)">🪣</div>
+      <div class="tech-name">MinIO</div>
+      <div class="tech-desc">S3 兼容对象存储，托管原始文件与文档内嵌图片资源</div>
+      <div class="tech-category">对象存储</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon" style="background:rgba(244,63,94,.12)">📄</div>
+      <div class="tech-name">MinerU / MagicPDF</div>
+      <div class="tech-desc">PDF 解析引擎，提取 Markdown + 图片，支持复杂排版还原</div>
+      <div class="tech-category">文档解析</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon" style="background:rgba(59,130,246,.12)">🧮</div>
+      <div class="tech-name">BGE-M3</div>
+      <div class="tech-desc">多语言向量嵌入模型，输出稠密向量 + 稀疏向量（SPLADE），支持 100+ 语言</div>
+      <div class="tech-category">Embedding</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon" style="background:rgba(139,92,246,.12)">📊</div>
+      <div class="tech-name">BGE-Reranker</div>
+      <div class="tech-desc">交叉编码重排序模型，对召回结果精排，显著提升检索准确率</div>
+      <div class="tech-category">Reranking</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon" style="background:rgba(16,185,129,.12)">🤖</div>
+      <div class="tech-name">LLM / VL 模型</div>
+      <div class="tech-desc">通义千问系列（qwen-plus / qwen-vl-max），OpenAI 兼容接口</div>
+      <div class="tech-category">大模型</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon" style="background:rgba(6,182,212,.12)">🔗</div>
+      <div class="tech-name">HyDE</div>
+      <div class="tech-desc">假设文档嵌入检索，将查询转化为伪答案再检索，弥补语义鸿沟</div>
+      <div class="tech-category">检索增强</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon" style="background:rgba(245,158,11,.12)">🌐</div>
+      <div class="tech-name">Web Search MCP</div>
+      <div class="tech-desc">阿里云百炼 MCP 工具协议，补充知识库外的实时网络信息检索</div>
+      <div class="tech-category">外部检索</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon" style="background:rgba(244,63,94,.12)">🔀</div>
+      <div class="tech-name">RRF 融合</div>
+      <div class="tech-desc">互惠排名融合算法，将多路召回结果融合为统一排序</div>
+      <div class="tech-category">融合算法</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon" style="background:rgba(139,92,246,.12)">📡</div>
+      <div class="tech-name">SSE 流式输出</div>
+      <div class="tech-desc">Server-Sent Events 实时推送答案生成过程，提供流畅交互体验</div>
+      <div class="tech-category">交互体验</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon" style="background:rgba(59,130,246,.12)">🔒</div>
+      <div class="tech-name">LangSmith</div>
+      <div class="tech-desc">LangChain 可观测平台，追踪 LangGraph 节点执行链路与性能指标</div>
+      <div class="tech-category">可观测性</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon" style="background:rgba(16,185,129,.12)">🐍</div>
+      <div class="tech-name">Python 3.11</div>
+      <div class="tech-desc">后端运行时，搭配 Pydantic 数据校验与 python-dotenv 配置管理</div>
+      <div class="tech-category">运行时</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FUTURE ROADMAP ═══════════ -->
+<section>
+  <div class="section-header">
+    <div class="icon">🚀</div>
+    <h2>未来技术优化展望</h2>
+    <p class="desc">持续迭代演进，从知识管理到智能推荐，从单模态到多模态全面升级</p>
+  </div>
+  <div class="divider"><div class="line"></div><div class="tag">Future Roadmap</div><div class="line"></div></div>
+
+  <div class="roadmap">
+    <div class="roadmap-item">
+      <div class="roadmap-num">01</div>
+      <div class="roadmap-icon">🔄</div>
+      <h4>增量更新引擎</h4>
+      <p>支持文档增量更新能力，无需全量重建向量索引，提升导入效率与实时性</p>
+      <div class="roadmap-tag">效率优化</div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-num">02</div>
+      <div class="roadmap-icon">🔐</div>
+      <h4>权限控制与多租户</h4>
+      <p>RBAC 权限模型 + 多租户隔离，支持不同运营团队的数据权限管理与资源隔离</p>
+      <div class="roadmap-tag">企业治理</div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-num">03</div>
+      <div class="roadmap-icon">🎯</div>
+      <h4>个性化推荐</h4>
+      <p>基于用户听书记录与偏好画像，实现千人千面的听书推荐与听书路径规划</p>
+      <div class="roadmap-tag">用户体验</div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-num">04</div>
+      <div class="roadmap-icon">🎙️</div>
+      <h4>语音检索能力</h4>
+      <p>基于语音转文本 / 字幕 / 时间轴文本，支持语音查询并定位有声书片段</p>
+      <div class="roadmap-tag">多模态</div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-num">05</div>
+      <div class="roadmap-icon">🖼️</div>
+      <h4>多模态检索</h4>
+      <p>封面图片 + 文本内容联合检索，支持以图搜书，丰富检索入口形态</p>
+      <div class="roadmap-tag">多模态</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <p>听书知识库 RAG Platform · Built with <span>LangGraph</span> · Milvus · FastAPI · BGE-M3</p>
+  <p style="margin-top:6px">Enterprise-Grade Audiobook Knowledge Base · AI-Powered Retrieval System</p>
+</footer>
+
+<script>
+  // Intersection Observer for scroll animations
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.pipeline-card, .tech-card, .roadmap-item').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(16px)';
+      el.style.transition = 'opacity .5s ease, transform .5s ease';
+      observer.observe(el);
+    });
+
+    // Trigger hero animations
+    document.querySelectorAll('.hero .animate').forEach(el => {
+      el.style.opacity = '1';
+    });
+  });
+
+  // Stat counter animation
+  document.addEventListener('DOMContentLoaded', () => {
+    const nums = document.querySelectorAll('.hero-stat .num');
+    nums.forEach(el => {
+      const target = parseInt(el.textContent);
+      let current = 0;
+      const step = Math.max(1, Math.ceil(target / 20));
+      const interval = setInterval(() => {
+        current += step;
+        if (current >= target) {
+          current = target;
+          clearInterval(interval);
+        }
+        el.textContent = current + (target > 3 ? '+' : '');
+      }, 50);
+    });
+  });
+</script>
+</body>
+</html>
